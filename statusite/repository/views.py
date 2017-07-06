@@ -68,4 +68,6 @@ def github_release_webhook(request):
         github_id = release_event['release']['id'],
         time_created = time_created,
     ) 
+    release.save()
+
     return HttpResponse('OK')
