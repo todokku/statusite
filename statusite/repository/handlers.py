@@ -16,7 +16,6 @@ def create_repo_webhooks(sender, **kwargs):
 
 @receiver(post_save, sender=Repository)
 def create_repo_webhooks(sender, **kwargs):
-    import pdb; pdb.set_trace()
     # Skip updates
     if not kwargs['created']:
         return
