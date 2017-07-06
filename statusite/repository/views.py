@@ -49,7 +49,7 @@ def github_release_webhook(request):
     if not validate_github_webhook(request):
         return HttpResponseForbidden
 
-    release_event = json.loads(request.body)
+    release_event = json.loads(str(request.body.decode('utf-8')))
     repo_id = release_event['repository']['id']
     try:
         repo = Repository.objects.get(github_id = repo_id)
