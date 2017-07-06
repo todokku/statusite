@@ -1,0 +1,64 @@
+{% extends 'django_slds/base_slds.html' %}
+
+{% load static %}
+
+{% block base_title %}{% endblock %}
+
+{% block base_head %}
+{% endblock %}
+
+{% block base_page_header %}
+<header class="slds-global-header_container">
+  <div class="slds-global-header slds-grid slds-grid--align-spread">
+{% comment %}
+    <div class="slds-global-header__item">
+      <div class="slds-global-header__logo">
+        <a href="/"><img src="/static/images/logo.jpg" alt="" /></a>
+      </div>
+    </div>
+{% endcomment %}
+  </div>
+</header>
+
+
+<div class="slds-clearfix"></div>
+
+<div class="slds-page-header slds-p-top--x-large slds-m-top--xx-large" role="banner">
+  <div class="slds-grid">
+    <div class="slds-col slds-has-flexi-truncate">
+      <div class="slds-media">
+        <div class="slds-media__body">
+          <p class="slds-text-heading--label">
+              {% block layout_parent_link %}<a href="/">Repositories</a>{% endblock %}
+          </p>
+          <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle" title="Record Title">
+            {% block layout_header_text %}
+            {% endblock %}
+          </h1>
+        {% block layout_header_description %}
+        {% endblock %}
+        </div>
+      </div>
+    </div>
+    <div class="slds-col slds-no-flex slds-align-bottom">
+      <div class="slds-button-group" role="group">
+        {% block layout_header_buttons %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+  {% block layout_header_details %}{% endblock %}
+</div>
+{% endblock %}
+
+{% block base_body %}
+
+  <div class="slds-grid">
+
+    <div class="slds-col slds-size--1-of-1 slds-p-around--large">
+      {% block layout_body %}{% endblock %}
+    </div>
+
+  </div>
+
+{% endblock %}
