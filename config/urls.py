@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
 
     # repository app
-    url(r'^$', repo_list),
+    url(r'^$', repo_list, name='home'),
     url(r'^repo/', include('statusite.repository.urls', namespace='repository')),
 
 
