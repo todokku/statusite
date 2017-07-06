@@ -63,7 +63,7 @@ def github_release_webhook(request):
     release = Release(
         repo = repo,
         name = release_event['release']['name'],
-        version = release_event['release']['version'],
+        version = release_event['release']['name'],
         beta = release_event['release']['prerelease'],
         release_notes = release_event['release']['body'],
         url = release_event['release']['html_url'],
