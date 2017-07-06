@@ -23,7 +23,7 @@ def create_repo_webhooks(sender, **kwargs):
     repo = kwargs['instance']
     event = 'release'
 
-    callback_url = '{}/{}'.format(settings.GITHUB_WEBHOOK_BASE_URL, event)
+    callback_url = '{}/repo/{}'.format(settings.GITHUB_WEBHOOK_BASE_URL, event)
   
     # Initialize repo API 
     github = repo.github_api
