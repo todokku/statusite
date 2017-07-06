@@ -52,3 +52,7 @@ djangorestframework==3.6.3
 
 # Django SLDS
 django_slds==0.1.2
+
+# dateutil
+python-dateutil==2.6.0
+
