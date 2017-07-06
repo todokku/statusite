@@ -13,6 +13,7 @@ def create_repo_webhooks(sender, **kwargs):
         github = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
         repo = github.repository(repository.owner, repository.name)
         repository.github_id = repo.id
+        repository.save()
 
 @receiver(post_save, sender=Repository)
 def create_repo_webhooks(sender, **kwargs):
