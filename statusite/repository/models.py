@@ -46,5 +46,8 @@ class Release(models.Model):
     def get_absolute_url(self):
         return reverse('release_detail', kwargs={'owner': self.owner, 'name': self.name})
 
+    def reload(self):
+        github = self.repo.github_api
+
     def __unicode__(self):
         return '{}: {}'.format(self.repo.product_name, self.version)

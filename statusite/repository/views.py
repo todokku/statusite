@@ -50,7 +50,6 @@ def github_release_webhook(request):
         return HttpResponseForbidden
 
     release_event = json.loads(request.body.decode('utf-8')) 
-    print(release_event)
 
     repo_id = release_event['repository']['id']
     try:
@@ -59,13 +58,17 @@ def github_release_webhook(request):
         return HttpResponse('Not listening for this repository')
 
     time_created = dateutil.parser.parse(release_event['release']['created_at'])
+
+    release_notes = release_event['release']['body']
+    if not release_notes:
+        release_notes = ''
   
     release = Release(
         repo = repo,
         name = release_event['release']['name'],
         version = release_event['release']['name'],
         beta = release_event['release']['prerelease'],
-        release_notes = release_event['release']['body'],
+        release_notes = release_notes,
         url = release_event['release']['html_url'],
         github_id = release_event['release']['id'],
         time_created = time_created,
