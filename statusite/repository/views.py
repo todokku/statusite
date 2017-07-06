@@ -38,7 +38,7 @@ def repo_detail(request, owner, name):
 def validate_github_webhook(request):
     key = settings.GITHUB_WEBHOOK_SECRET
     signature = request.META.get('HTTP_X_HUB_SIGNATURE').split('=')[1]
-    mac = hmac.new(key, msg=request.body, digestmod=sha1)
+    mac = hmac.new(bytearray(key, 'utf8'), msg=request.body, digestmod=sha1)
     if not hmac.compare_digest(mac.hexdigest(), signature):
         return False
     return True
