@@ -50,7 +50,7 @@ def github_release_webhook(request):
         return HttpResponseForbidden
 
     release_event = request.json() 
-    print release_event
+    print(release_event)
     repo_id = release_event['repository']['id']
     try:
         repo = Repository.objects.get(github_id = repo_id)
