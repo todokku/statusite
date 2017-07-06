@@ -26,7 +26,7 @@ def create_repo_webhooks(sender, **kwargs):
     callback_url = '{}/{}'.format(settings.GITHUB_WEBHOOK_BASE_URL, event)
   
     # Initialize repo API 
-    github = repo.get_github_api()
+    github = repo.github_api
 
     # Check if webhook exists for repo
     existing = False
