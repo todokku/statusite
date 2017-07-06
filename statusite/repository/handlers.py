@@ -16,6 +16,7 @@ def create_repo_webhooks(sender, **kwargs):
 
 @receiver(post_save, sender=Repository)
 def create_repo_webhooks(sender, **kwargs):
+    import pdb; pdb.set_trace()
     # Skip updates
     if not kwargs['created']:
         return
@@ -36,12 +37,15 @@ def create_repo_webhooks(sender, **kwargs):
 
     # If no webhook, create it 
     if not existing:
-        github.create_hook(
-            name = 'web',
-            events = [event],
-            config = {
+        kwargs = {
+            'name': 'web',
+            'events': [event],
+            'config': {
                 'url': callback_url,
                 'content_type': 'json',
                 'secret': settings.GITHUB_WEBHOOK_SECRET,
             },
-        )
+        }
+        resp = github.create_hook(**kwargs)
+
+        return resp
