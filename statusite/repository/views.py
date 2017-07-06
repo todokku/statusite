@@ -2,7 +2,7 @@ import hmac
 import json
 import re
 
-import dateutil
+import dateutil.parser
 from hashlib import sha1
 
 from django.shortcuts import render
