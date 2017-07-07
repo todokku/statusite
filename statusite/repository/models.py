@@ -36,9 +36,9 @@ class Repository(models.Model):
 
     @property
     def latest_beta(self):
-        beta = self.beta.filter(beta=False)[:1]
-        if beta:
-            return beta[0]
+        release = self.releases.filter(beta=True)[:1]
+        if release:
+            return release[0]
 
 class Release(models.Model):
     repo = models.ForeignKey(Repository, related_name='releases')
