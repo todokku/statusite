@@ -25,8 +25,13 @@ class Repository(models.Model):
     @property 
     def github_api(self):
         gh = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
-        repo = gh.repository(self.owner, self.name)
-        return repo
+        gh = gh.repository(self.owner, self.name)
+        return gh
+
+    @property 
+    def github_api_root(self):
+        gh = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
+        return gh
 
     @property
     def latest_release(self):
@@ -66,6 +71,14 @@ class Release(models.Model):
             body = ''
         self.release_notes = body
         self.save()
+
+    @property
+    def release_notes_html(self):
+        if not self.release_notes:
+            return None
+        github = self.repo.github_api_root
+        html = github.markdown(self.release_notes, mode='gfm', context='{}/{}'.format(self.repo.owner, self.repo.name))
+        return html
 
     def __unicode__(self):
         return '{}: {}'.format(self.repo.product_name, self.version)

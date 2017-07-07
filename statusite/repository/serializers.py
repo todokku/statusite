@@ -5,7 +5,7 @@ from rest_framework import serializers
 class ReleaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Release
-        fields = ('name', 'version', 'beta', 'release_notes', 'url', 'time_created')
+        fields = ('name', 'version', 'beta', 'release_notes', 'release_notes_html', 'url', 'time_created')
 
 class RepositorySerializer(serializers.ModelSerializer):
     latest_release = ReleaseSerializer(required=False)
