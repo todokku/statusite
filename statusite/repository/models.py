@@ -28,6 +28,18 @@ class Repository(models.Model):
         repo = gh.repository(self.owner, self.name)
         return repo
 
+    @property
+    def latest_release(self):
+        release = self.releases.filter(beta=False)[:1]
+        if release:
+            return release[0]
+
+    @property
+    def latest_beta(self):
+        beta = self.beta.filter(beta=False)[:1]
+        if beta:
+            return beta[0]
+
 class Release(models.Model):
     repo = models.ForeignKey(Repository, related_name='releases')
     name = models.CharField(max_length=255)
@@ -41,13 +53,19 @@ class Release(models.Model):
     time_push_prod = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        ordering = ['repo__product_name', 'name']
+        ordering = ['repo__product_name', '-time_created']
         
     def get_absolute_url(self):
         return reverse('release_detail', kwargs={'owner': self.owner, 'name': self.name})
 
     def reload(self):
         github = self.repo.github_api
+        release = self.repo.release(self.github_id)
+        body = release['release']['body']
+        if not body:
+            body = ''
+        self.release_notes = body
+        self.save()
 
     def __unicode__(self):
         return '{}: {}'.format(self.repo.product_name, self.version)

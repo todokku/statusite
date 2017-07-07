@@ -4,7 +4,6 @@ import re
 
 import dateutil.parser
 from hashlib import sha1
-
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.conf import settings
@@ -12,8 +11,12 @@ from django.http import HttpResponse
 from django.http import HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.response import Response
 from statusite.repository.models import Release
 from statusite.repository.models import Repository
+from statusite.repository.serializers import ReleaseSerializer
+from statusite.repository.serializers import RepositorySerializer
 
 def repo_list(request, owner=None):
     repos = Repository.objects.all()
@@ -76,3 +79,16 @@ def github_release_webhook(request):
     release.save()
 
     return HttpResponse('OK')
+
+
+class api_repository(RetrieveAPIView):
+    """
+    API endpoint that allows repositories to be viewed.
+    """
+    serializer_class = RepositorySerializer
+    queryset = Repository.objects.all().order_by('owner','name')
+
+    def get(self, request, owner, repo):
+        repo = self.queryset.get(owner=owner, name=repo)
+        serializer = self.serializer_class(repo)
+        return Response(serializer.data)
