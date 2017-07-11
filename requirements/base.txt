@@ -56,3 +56,10 @@ django_slds==0.1.2
 # dateutil
 python-dateutil==2.6.0
 
+# Django RQ
+django-rq>=0.9.5
+django-rq-wrapper>=2.1
+django-rq-scheduler>=1.1.1
+
+# Honcho: python foreman clone
+honcho>=1.0.1
