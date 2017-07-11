@@ -1,0 +1,2 @@
+worker: python manage.py rqworkers default --workers 3 --worker-class statusite.repository.worker.RequeueingWorker
+scheduler: python manage.py rqscheduler

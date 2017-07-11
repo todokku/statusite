@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^$', repo_list, name='home'),
     url(r'^repo/', include('statusite.repository.urls', namespace='repository')),
 
+    # django-rq
+    url(r'^django-rq/', include('django_rq.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

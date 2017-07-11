@@ -65,8 +65,8 @@ class Release(models.Model):
 
     def reload(self):
         github = self.repo.github_api
-        release = self.repo.release(self.github_id)
-        body = release['release']['body']
+        release = github.release(self.github_id)
+        body = release.body
         if not body:
             body = ''
         self.release_notes = body

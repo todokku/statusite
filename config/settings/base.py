@@ -51,6 +51,9 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',  # registration
     'django_slds',  # Salesforce Lightning Design System
     'rest_framework', # API
+    'django_rq',
+    'scheduler', # django-rq-scheduler
+    'django_rq_wrapper',
 ]
 
 # Apps specific for this project go here.
@@ -275,3 +278,14 @@ GITHUB_USERNAME = None
 GITHUB_PASSWORD = None
 GITHUB_WEBHOOK_BASE_URL = None
 GITHUB_WEBHOOK_SECRET = None
+
+# django-rq
+REDIS_URL = env('REDIS_URL', default='redis://localhost:6379')
+REDIS_URL += '/0'
+RQ_QUEUES = {
+    'default': {
+        'URL': REDIS_URL,
+        'DEFAULT_TIMEOUT': 60,
+        'AUTOCOMMIT': False,
+    },
+}

@@ -6,7 +6,7 @@ from github3 import login
 from statusite.repository.models import Repository
 
 @receiver(pre_save, sender=Repository)
-def create_repo_webhooks(sender, **kwargs):
+def set_github_id(sender, **kwargs):
     repository = kwargs['instance']
 
     if not repository.github_id:
