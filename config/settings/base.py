@@ -60,6 +60,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'statusite.users.apps.UsersConfig',
     'statusite.repository.apps.RepositoryConfig',
+    'statusite.youtube.apps.YoutubeConfig',
+    'statusite.api.apps.ApiConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -289,3 +291,6 @@ RQ_QUEUES = {
         'AUTOCOMMIT': False,
     },
 }
+
+# YouTube
+YOUTUBE_API_KEY = None

@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     # API
-    url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/', include('statusite.api.urls', namespace='api')),
 
     # repository app
     url(r'^$', repo_list, name='home'),
