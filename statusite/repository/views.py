@@ -9,6 +9,8 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.http import HttpResponse
 from django.http import HttpResponseForbidden
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from rest_framework.generics import RetrieveAPIView
@@ -87,6 +89,10 @@ class api_repository(RetrieveAPIView):
     """
     serializer_class = RepositorySerializer
     queryset = Repository.objects.all().order_by('owner','name')
+
+    @method_decorator(cache_page(60))
+    def dispatch(self, *args, **kwargs):
+        return super(api_repository, self).dispatch(*args, **kwargs)
 
     def get(self, request, owner, repo):
         repo = self.queryset.get(owner=owner, name=repo)
