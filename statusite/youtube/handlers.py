@@ -3,13 +3,10 @@ from django.dispatch import receiver
 import django_rq
 
 from statusite.youtube.models import Playlist
+from statusite.youtube.tasks import update_playlist
 
 
 @receiver(post_save, sender=Playlist)
 def init_playlist_data(sender, **kwargs):
     if kwargs['created']:
-        queue = django_rq.get_queue('default')
-        queue.enqueue_call(
-            func=kwargs['instance'].reload,
-            timeout=600,
-        )
+        update_playlist.delay(kwargs['instance'].id)

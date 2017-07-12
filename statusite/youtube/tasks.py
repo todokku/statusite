@@ -9,6 +9,14 @@ def update_playlists():
     db.connection.close()
     n = 0
     for playlist in Playlist.objects.all():
-        playlist.reload()
+        update_playlist.delay(playlist.id)
         n += 1
-    return 'Updated {} playlists'.format(n)
+    return 'Queued {} playlists for update'.format(n)
+
+
+@django_rq.job('default', timeout=600)
+def update_playlist(playlist_id):
+    db.connection.close()
+    playlist = Playlist.objects.get(id=playlist_id)
+    playlist.reload()
+    return 'Updated playlist {}'.format(playlist_id)
