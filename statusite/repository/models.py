@@ -19,7 +19,7 @@ class Repository(models.Model):
     def get_absolute_url(self):
         return reverse('repo_detail', kwargs={'owner': self.owner, 'name': self.name})
 
-    def __unicode__(self):
+    def __str__(self):
         return '{}/{}'.format(self.owner, self.name)
    
     @property 
@@ -80,5 +80,5 @@ class Release(models.Model):
         html = github.markdown(self.release_notes, mode='gfm', context='{}/{}'.format(self.repo.owner, self.repo.name))
         return html
 
-    def __unicode__(self):
+    def __str__(self):
         return '{}: {}'.format(self.repo.product_name, self.version)
