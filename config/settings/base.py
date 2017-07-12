@@ -54,7 +54,6 @@ THIRD_PARTY_APPS = [
     'django_rq',
     'scheduler', # django-rq-scheduler
     'django_rq_wrapper',
-    'google-api-python-client',
 ]
 
 # Apps specific for this project go here.
