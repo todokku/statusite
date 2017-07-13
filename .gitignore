@@ -67,3 +67,5 @@ staticfiles/
 .cache/
 
 venv/
+
+*.bak
