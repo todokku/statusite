@@ -29,10 +29,15 @@ class Playlist(models.Model):
 
     def reload(self):
         youtube_api = youtube_api_wrapper()
-        results = youtube_api.playlists().list(
+        results_playlists = youtube_api.playlists().list(
             id=self.youtube_id,
             part='snippet',
         ).execute()
-        self.json_str = json.dumps(results['items'][0], default=json_serial)
-        self.title = results['items'][0]['snippet']['title']
+        self.title = results_playlists['items'][0]['snippet']['title']
+        results_playlistItems = youtube_api.playlistItems().list(
+            maxResults=3,
+            part='snippet,contentDetails',
+            playlistId=self.youtube_id,
+        ).execute()
+        self.json_str = json.dumps(results_playlistItems, default=json_serial)
         self.save()
