@@ -12,7 +12,7 @@ urlpatterns = [
         name='api-repository',
     ),
     url(
-        r'^youtube/playlists/(?P<youtube_id>\w+)$',
+        r'youtube/playlists/(?P<youtube_id>.+)$',
         youtube_views.PlaylistView.as_view(),
         name='api-playlist',
     ),
