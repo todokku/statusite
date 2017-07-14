@@ -56,6 +56,7 @@ node_modules/
 
 # virtual environments
 .env
+local_setup.sh
 
 # User-uploaded media
 statusite/media/
