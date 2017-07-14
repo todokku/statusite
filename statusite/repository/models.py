@@ -74,7 +74,7 @@ class Release(models.Model):
             self.save()
         else:
             raise RepoReloadError(
-                'GitHub repo: {}'.format(self.html_url) +
+                'GitHub repo: {}'.format(github.html_url) +
                 'GitHub release ID: {}'.format(self.github_id) +
                 'release: {}'.format(release)
             )
