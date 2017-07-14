@@ -73,10 +73,11 @@ class Release(models.Model):
             self.release_notes = release.body
             self.save()
         else:
-            raise RepoReloadError('GitHub release ID: {} - release: {}'.format(
-                self.github_id,
-                release,
-            ))
+            raise RepoReloadError(
+                'GitHub repo: {}'.format(self.html_url) +
+                'GitHub release ID: {}'.format(self.github_id) +
+                'release: {}'.format(release)
+            )
 
     @property
     def release_notes_html(self):
