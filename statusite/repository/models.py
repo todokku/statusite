@@ -6,6 +6,9 @@ from django.urls import reverse
 from github3 import login
 from django.conf import settings
 
+from statusite.repository.exceptions import RepoReloadError
+
+
 class Repository(models.Model):
     name = models.CharField(max_length=255)
     owner = models.CharField(max_length=255)
@@ -66,11 +69,14 @@ class Release(models.Model):
     def reload(self):
         github = self.repo.github_api
         release = github.release(self.github_id)
-        body = release.body
-        if not body:
-            body = ''
-        self.release_notes = body
-        self.save()
+        if release:
+            self.release_notes = release.body
+            self.save()
+        else:
+            raise RepoReloadError('GitHub release ID: {} - release: {}'.format(
+                self.github_id,
+                release,
+            ))
 
     @property
     def release_notes_html(self):
