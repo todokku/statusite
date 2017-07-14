@@ -83,7 +83,7 @@ def github_release_webhook(request):
     return HttpResponse('OK')
 
 
-class api_repository(RetrieveAPIView):
+class ApiRepository(RetrieveAPIView):
     """
     API endpoint that allows repositories to be viewed.
     """
@@ -92,7 +92,7 @@ class api_repository(RetrieveAPIView):
 
     @method_decorator(cache_page(60))
     def dispatch(self, *args, **kwargs):
-        return super(api_repository, self).dispatch(*args, **kwargs)
+        return super(ApiRepository, self).dispatch(*args, **kwargs)
 
     def get(self, request, owner, repo):
         repo = self.queryset.get(owner=owner, name=repo)
