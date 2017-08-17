@@ -7,6 +7,7 @@ from github3 import login
 from django.conf import settings
 
 from statusite.repository.exceptions import RepoReloadError
+from statusite.repository.utils import parse_times
 
 
 class Repository(models.Model):
@@ -71,6 +72,8 @@ class Release(models.Model):
         release = github.release(self.github_id)
         if release:
             self.release_notes = release.body
+            self.time_push_sandbox, self.time_push_prod = parse_times(
+                release.body)
             self.save()
         else:
             raise RepoReloadError(
