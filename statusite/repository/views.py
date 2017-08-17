@@ -19,6 +19,7 @@ from statusite.repository.models import Release
 from statusite.repository.models import Repository
 from statusite.repository.serializers import ReleaseSerializer
 from statusite.repository.serializers import RepositorySerializer
+from statusite.repository.utils import parse_times
 
 def repo_list(request, owner=None):
     repos = Repository.objects.all()
@@ -68,6 +69,7 @@ def github_release_webhook(request):
     if not release_notes:
         release_notes = ''
   
+    time_sandbox, time_prod = parse_times(release_notes)
     release = Release(
         repo = repo,
         name = release_event['release']['name'],
@@ -77,6 +79,8 @@ def github_release_webhook(request):
         url = release_event['release']['html_url'],
         github_id = release_event['release']['id'],
         time_created = time_created,
+        time_push_sandbox = time_sandbox,
+        time_push_prod = time_prod,
     ) 
     release.save()
 
