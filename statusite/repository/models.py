@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 from github3 import login
 from django.conf import settings
@@ -47,6 +48,18 @@ class Repository(models.Model):
         release = self.releases.filter(beta=True)[:1]
         if release:
             return release[0]
+
+    @property
+    def production_release(self):
+        for release in self.releases.filter(beta=False):
+            if release.time_push_prod and release.time_push_prod <= timezone.now():
+                return release
+
+    @property
+    def sandbox_release(self):
+        for release in self.releases.filter(beta=False):
+            if release.time_push_sandbox and release.time_push_sandbox <= timezone.now():
+                return release
 
 class Release(models.Model):
     repo = models.ForeignKey(Repository, related_name='releases')
