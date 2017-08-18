@@ -9,7 +9,6 @@ router = routers.DefaultRouter()
 urlpatterns = [
     #url(r'^', include(router.urls)),
     url(r'webhook/github/release$', repository_views.github_release_webhook, name="github_release_webhook"),
-    url(r'api/(?P<owner>\w+)/(?P<repo>[^/].*)$', repository_views.ApiRepository.as_view(), name="api-repository"),
     url(r'(?P<owner>\w+)/(?P<name>[^/].*)/*$', repository_views.repo_detail, name="repository-detail"),
     url(r'(?P<owner>\w+)/(?P<name>[^/].*)/*$', repository_views.repo_detail, name="release-detail"),
 ]
