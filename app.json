@@ -1,4 +1,10 @@
 {
+  "name": "statusite",
+  "repository": "https://github.com/SalesforceFoundation/statusite",
+  "addons": [
+    "heroku-postgresql",
+    "heroku-redis"
+  ],
   "environments": {
     "test": {
       "scripts": {
