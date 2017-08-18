@@ -1,5 +1,9 @@
+import re
+
 from django.conf import settings
+from django.utils.dateparse import parse_datetime
 from github3 import login
+import pytz
 
 
 def create_status(build):
@@ -38,3 +42,30 @@ def create_status(build):
     )
 
     return response
+
+
+def parse_times(release_notes):
+    """ Parse push times from release notes text """
+    def get_tz_time(s):
+        """Convert date string into timezone-aware object
+        Assume time is 6:00 PM and timezone is US Pacific
+        (This is when we schedule push upgrades to begin)
+        """
+        s += ' 18:00:00'
+        naive = parse_datetime(s)
+        return pytz.timezone('US/Pacific').localize(naive,
+            is_dst=True)
+    time_sandbox = None
+    time_production = None
+    reobj = re.compile(
+        '(?P<type>sandbox|production) orgs: (?P<date>\d\d\d\d-\d\d-\d\d)',
+        re.IGNORECASE,
+    )
+    for line in release_notes.splitlines():
+        m = reobj.match(line)
+        if m:
+            if m.group('type') == 'Sandbox':
+                time_sandbox = get_tz_time(m.group('date'))
+            else:
+                time_production = get_tz_time(m.group('date'))
+    return time_sandbox, time_production
