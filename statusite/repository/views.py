@@ -98,3 +98,21 @@ class ApiRepository(RetrieveAPIView):
         repo = self.queryset.get(owner=owner, name=repo)
         serializer = self.serializer_class(repo)
         return Response(serializer.data)
+
+
+class ApiRelease(RetrieveAPIView):
+    """
+    API endpoint to view a single release
+    """
+    serializer_class = ReleaseSerializer
+    queryset = Repository.objects.all()
+
+    @method_decorator(cache_page(60))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get(self, request, owner, repo, version):
+        repo = self.queryset.get(owner=owner, name=repo)
+        release = repo.releases.get(version=version)
+        serializer = self.serializer_class(release)
+        return Response(serializer.data)

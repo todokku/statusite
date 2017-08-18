@@ -7,6 +7,11 @@ from statusite.youtube import views as youtube_views
 
 urlpatterns = [
     url(
+        r'repository/(?P<owner>\w+)/(?P<repo>[^/].*)/(?P<version>.+)$',
+        repository_views.ApiRelease.as_view(),
+        name='api-release',
+    ),
+    url(
         r'repository/(?P<owner>\w+)/(?P<repo>[^/].*)$',
         repository_views.ApiRepository.as_view(),
         name='api-repository',
