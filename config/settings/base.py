@@ -278,7 +278,6 @@ ADMIN_URL = r'^admin/'
 # Github credentials
 GITHUB_USERNAME = None
 GITHUB_PASSWORD = None
-GITHUB_WEBHOOK_BASE_URL = None
 GITHUB_WEBHOOK_SECRET = None
 
 # django-rq
