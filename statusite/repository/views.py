@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.http import HttpResponse
 from django.http import HttpResponseForbidden
+from django.core.exceptions import PermissionDenied
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
@@ -18,6 +19,7 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from statusite.repository.models import Release
 from statusite.repository.models import Repository
+from statusite.repository.models import BuildResult
 from statusite.repository.serializers import ReleaseSerializer
 from statusite.repository.serializers import RepositorySerializer
 from statusite.repository.utils import parse_times
@@ -46,6 +48,48 @@ def repo_detail(request, owner, name):
 class ReleaseDetailView(DetailView):
     model = Release
     context_object_name = 'release'
+
+@csrf_exempt
+@require_POST
+def mrbelvedereci_build_webhook(request):
+    #TODO: are these response values okay?
+    #TODO: class based?
+
+    if not validate_mrbelvedereci_webhook(request):
+        raise PermissionDenied
+
+    build_event = json.loads(request.body.decode('utf-8')) 
+    owner = build_event['repository']['owner']
+    repo_name = build_event['repository']['name']
+    try:
+        repo = Repository.objects.get(owner = owner, name = repo_name)
+    except Repository.DoesNotExist:
+        return HttpResponse('Not listening for this repository')
+
+    # find the appropriate release for this build
+    try:
+        release = Release.objects.get(repo = repo, tag = build_event['build']['tag'])
+    except Release.DoesNotExist:
+        return HttpResponse('Invalid release')
+
+    build_result = BuildResult(
+        repo = repo,
+        release = release,
+        plan_name = build_event['build']['plan'],
+        mbci_build_id = build_event['build']['id']
+        status = build_event['build']['status'],
+        build_date = build_event['build']['start_date'],
+        test_passed = build_event['build']['tests_pass'],
+        test_failed = build_event['build']['tests_fail'],
+        test_total = build_event['build']['tests_total'],
+    )
+    build_result.save()
+    return HttpResponse('OK')
+
+
+def validate_mrbelvedereci_webhook(request):
+    # TODO: design validation scheme
+    return True
 
 
 def validate_github_webhook(request):
@@ -88,6 +132,7 @@ def github_release_webhook(request):
         time_created = time_created,
         time_push_sandbox = time_sandbox,
         time_push_prod = time_prod,
+        tag = release_event['release']['tag_name']
     ) 
     release.save()
 
