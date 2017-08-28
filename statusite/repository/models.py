@@ -73,6 +73,7 @@ class Release(models.Model):
     time_created = models.DateTimeField()
     time_push_sandbox = models.DateTimeField(null=True, blank=True)
     time_push_prod = models.DateTimeField(null=True, blank=True)
+    tag = models.CharField(max_length=255)
 
     class Meta:
         ordering = ['repo__product_name', '-time_created']
