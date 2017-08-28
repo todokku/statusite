@@ -90,7 +90,14 @@ def mrbelvedereci_build_webhook(request):
 
 
 def validate_mrbelvedereci_webhook(request):
-    # TODO: design validation scheme
+    if not settings.STATUSITE_WEBHOOK_VERIFY:
+        return True
+    
+    key = settings.STATUSITE_WEBHOOK_SECRET
+    signature = request.META.get('HTTP_X_HUB_SIGNATURE').split('=')[1]
+    mac = hmac.new(bytearray(key, 'utf8'), msg=request.body, digestmod=sha1)
+    if not hmac.compare_digest(mac.hexdigest(), signature):
+        return False
     return True
 
 
