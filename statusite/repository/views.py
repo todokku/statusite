@@ -55,6 +55,7 @@ def mrbelvedereci_build_webhook(request):
     #TODO: are these response values okay?
     #TODO: class based?
 
+
     if not validate_mrbelvedereci_webhook(request):
         raise PermissionDenied
 
@@ -76,12 +77,12 @@ def mrbelvedereci_build_webhook(request):
         repo = repo,
         release = release,
         plan_name = build_event['build']['plan'],
-        mbci_build_id = build_event['build']['id']
+        mbci_build_id = build_event['build']['id'],
         status = build_event['build']['status'],
         build_date = build_event['build']['start_date'],
-        test_passed = build_event['build']['tests_pass'],
-        test_failed = build_event['build']['tests_fail'],
-        test_total = build_event['build']['tests_total'],
+        tests_passed = build_event['build']['tests_pass'],
+        tests_failed = build_event['build']['tests_fail'],
+        tests_total = build_event['build']['tests_total'],
     )
     build_result.save()
     return HttpResponse('OK')

@@ -20,6 +20,7 @@ class Repository(models.Model):
 
     class Meta:
         ordering = ['name','owner']
+        
 
     def get_absolute_url(self):
         return reverse('repo_detail', kwargs={'owner': self.owner, 'name': self.name})
