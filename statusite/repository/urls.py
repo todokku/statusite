@@ -11,5 +11,5 @@ urlpatterns = [
     url(r'webhook/github/release$', repository_views.github_release_webhook, name="github_release_webhook"),
     url(r'webhook/mbci/build$', repository_views.mrbelvedereci_build_webhook, name="mrbelvedereci_build_webhook"),
     url(r'^release/(?P<pk>\d+)/$', repository_views.ReleaseDetailView.as_view(), name="release-detail"),
-    url(r'^(?P<owner>\w+)/(?P<name>[^/].*)/*$', repository_views.repo_detail, name="repository-detail"),
+    url(r'^(?P<owner>\w+)/(?P<name>[^/].*)/*$', repository_views.repo_detail, name="repo_detail"),
 ]

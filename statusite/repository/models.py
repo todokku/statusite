@@ -23,7 +23,7 @@ class Repository(models.Model):
         
 
     def get_absolute_url(self):
-        return reverse('repo_detail', kwargs={'owner': self.owner, 'name': self.name})
+        return reverse('repository:repo_detail', kwargs={'owner': self.owner, 'name': self.name})
 
     def __str__(self):
         return '{}/{}'.format(self.owner, self.name)

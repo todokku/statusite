@@ -41,6 +41,7 @@ def repo_detail(request, owner, name):
 
     context = {
         'repo': repo,
+        'releases': repo.releases.all().order_by('time_created')
     }
     return render(request, 'repository/repo_detail.html', context=context)
 
