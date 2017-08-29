@@ -62,6 +62,7 @@ LOCAL_APPS = [
     'statusite.repository.apps.RepositoryConfig',
     'statusite.youtube.apps.YoutubeConfig',
     'statusite.api.apps.ApiConfig',
+    'statusite.build_events.apps.BuildEventsConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -290,6 +291,9 @@ RQ_QUEUES = {
         'AUTOCOMMIT': False,
     },
 }
+
+
+
 
 # YouTube
 YOUTUBE_API_KEY = None
