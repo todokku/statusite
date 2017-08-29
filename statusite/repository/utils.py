@@ -46,15 +46,11 @@ def create_status(build):
 
 def parse_times(release_notes):
     """ Parse push times from release notes text """
-    def get_tz_time(s):
+    def parse_time(date):
         """Convert date string into timezone-aware object
-        Assume time is 6:00 PM and timezone is US Pacific
-        (This is when we schedule push upgrades to begin)
+        Assume time is 00:00 UTC for the parsed date.
         """
-        s += ' 18:00:00'
-        naive = parse_datetime(s)
-        return pytz.timezone('US/Pacific').localize(naive,
-            is_dst=True)
+        return parse_datetime(date + ' 00:00+00')
     time_sandbox = None
     time_production = None
     reobj = re.compile(
@@ -65,7 +61,7 @@ def parse_times(release_notes):
         m = reobj.match(line)
         if m:
             if m.group('type') == 'Sandbox':
-                time_sandbox = get_tz_time(m.group('date'))
+                time_sandbox = parse_time(m.group('date'))
             else:
-                time_production = get_tz_time(m.group('date'))
+                time_production = parse_time(m.group('date'))
     return time_sandbox, time_production
