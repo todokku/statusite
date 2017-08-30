@@ -22,10 +22,17 @@ class BuildEventSerializer(serializers.ModelSerializer):
         fields = ('plan_name', 'build_id', 'status', 'tests_passed', 'build_date',
                   'tests_failed', 'tests_total', 'build_data', 'repository', 'tag')
 
-    def save(self):
-        event_data = self.validated_data
-        result = BuildResult(**event_data)
-        result.save()
+    def save(self, **kwargs):
+        
+        # if this is actually an update, set an instance.
+        try:
+            self.instance = self.validated_data['release'].build_results.get(
+                build_id = self.validated_data['build_id'
+            ])
+        except BuildResult.DoesNotExist:
+            pass
+
+        super(BuildEventSerializer, self).save(**kwargs)
 
     def validate_repository(self, repo):
         try:

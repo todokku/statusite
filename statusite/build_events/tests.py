@@ -69,6 +69,18 @@ class TestBuildEventSerializer(TestBuildEvents):
         build = BuildResult.objects.get(repo = self.repo)
         self.assertEqual(build.build_id, 3000)
 
+    def test_serializer_save_update(self):
+        result = BuildEventSerializer(data=self.event)
+        result.is_valid()
+        result.save()
+        result2 = BuildEventSerializer(data=self.event)
+        result2.initial_data['plan_name'] = 'SUPERFAIL'
+        result2.is_valid()
+        result2.save()
+        count = BuildResult.objects.filter(repo = self.repo, build_id = 3000).count()
+        self.assertEqual(1, count)
+        build = BuildResult.objects.get(repo = self.repo)
+        self.assertEqual('SUPERFAIL', build.plan_name)
 
 class TestBuildReleaseWebhook(TestBuildEvents):
     def test_build_release_webhook(self):
