@@ -12,6 +12,13 @@ from django.views.decorators.http import require_POST
 from statusite.repository.models import Release
 from statusite.repository.models import Repository
 from build_events.models import BuildResult
+from build_events.serializers import BuildEventSerializer
+
+from rest_framework.generics import CreateAPIView
+
+class BuildEventWebhook(CreateAPIView):
+    serializer_class = BuildEventSerializer
+
 
 @csrf_exempt
 @require_POST

@@ -14,7 +14,7 @@ class BuildEventRepositorySerializer(serializers.ModelSerializer):
 class BuildEventSerializer(serializers.ModelSerializer):
     """ Converts a BuildEvent into a BuildResult """
     repository = BuildEventRepositorySerializer(source='repo') # setting source renames it after validation, I guess
-    tag = serializers.CharField(max_length=255)
+    tag = serializers.CharField(max_length=255, write_only=True)
     build_data = serializers.JSONField()
 
     class Meta:

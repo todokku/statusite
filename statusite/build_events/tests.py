@@ -2,10 +2,14 @@
 import json 
 from django.utils import timezone
 from django.test import TestCase
+
+from rest_framework.test import APIRequestFactory
+
 # Not sure why these need to be imported this way.
 from statusite.repository.models import Release, Repository
 from build_events.models import BuildResult
 from build_events.serializers import BuildEventSerializer
+from build_events.views import BuildEventWebhook
 
 class TestBuildEvents(TestCase):
     def setUp(self):
@@ -29,11 +33,6 @@ class TestBuildEvents(TestCase):
             tag = 'uat/Version 1' 
         )
         self.release.save()
-
-
-class TestBuildEventSerializer(TestBuildEvents):
-    def setUp(self):
-        super(TestBuildEventSerializer, self).setUp()
         self.event = {'build_data': {'flow': 'ci_beta'},
                       'build_id': 3000,
                       'plan_name': 'Beta Test',
@@ -44,6 +43,17 @@ class TestBuildEventSerializer(TestBuildEvents):
                       'tests_passed': 10,
                       'tests_total': 10,
                       'build_date': timezone.now().date()}
+
+class TestBuildEventWebhookView(TestBuildEvents):
+    def test_create_webhook(self):
+        factory = APIRequestFactory()
+        request = factory.post('/url', self.event, format='json')
+        view = BuildEventWebhook.as_view()
+        response = view(request)
+        self.assertEqual(response.status_code, 201)
+
+
+class TestBuildEventSerializer(TestBuildEvents):
 
     def test_valid_serializer(self):
         result = BuildEventSerializer(data=self.event)
