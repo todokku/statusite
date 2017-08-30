@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from statusite.repository.views import repo_list
-from statusite.build_events.views import mrbelvedereci_build_webhook
+from statusite.build_events.views import BuildEventWebhook
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^repo/', include('statusite.repository.urls', namespace='repository')),
 
     # buildresults api
-    url(r'^webhook/mbci/build$', mrbelvedereci_build_webhook, name="mrbelvedereci_build_webhook"),
+    url(r'^webhook/mbci$', BuildEventWebhook.as_view(), name="build_event_webhook"),
 
 
     # django-rq

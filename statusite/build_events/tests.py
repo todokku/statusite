@@ -3,7 +3,7 @@ import json
 from django.utils import timezone
 from django.test import TestCase
 
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APIRequestFactory, APIClient
 
 # Not sure why these need to be imported this way.
 from statusite.repository.models import Release, Repository
@@ -92,25 +92,25 @@ class TestBuildEventSerializer(TestBuildEvents):
         build = BuildResult.objects.get(repo = self.repo)
         self.assertEqual('SUPERFAIL', build.plan_name)
 
-class TestBuildReleaseWebhook(TestBuildEvents):
-    def test_build_release_webhook(self):
+class TestBuildEventWebhook(TestBuildEvents):
+    def test_webhook_call(self):
+        self.client = APIClient()
         build_event = {
             'repository': {
                 'name': 'TestRepo',
                 'owner': 'Test'
             },
-            'build': {
-                'tag': 'uat/Version 1',
-                'plan': 'Upload Beta',
-                'id': 3000,
-                'status': 'SUCCESS',
-                'start_date': timezone.now().date().isoformat(),
-                'tests_pass': 10,
-                'tests_fail': 0,
-                'tests_total': 10
-            }
+            'tag': 'uat/Version 1',
+            'plan_name': 'Beta Build',
+            'build_id': 3000,
+            'status': 'SUCCESS',
+            'build_date': timezone.now().date().isoformat(),
+            'tests_passed': 10,
+            'tests_failed': 0,
+            'tests_total': 10,
+            'build_data': {'flow': 'ci_beta'}
         }
-        response = self.client.post('/webhook/mbci/build', json.dumps(build_event), content_type="application/json")
-        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/webhook/mbci', json.dumps(build_event), content_type="application/json")
+        self.assertEqual(response.status_code, 201)
         build = BuildResult.objects.get(repo = self.repo)
         self.assertEqual(build.build_id, 3000)

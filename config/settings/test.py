@@ -59,5 +59,3 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
         'django.template.loaders.app_directories.Loader',
     ], ],
 ]
-
-STATUSITE_WEBHOOK_SECRET = 'TESTSECRET'
