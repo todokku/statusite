@@ -66,3 +66,5 @@ honcho>=1.0.1
 
 # Google API
 google-api-python-client>=1.6.2
+
+jsonfield>=2.0.2
