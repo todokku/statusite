@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import BuildResult
+from build_events.models import BuildResult
 
 # Register your models here.
 class BuildResultAdmin(admin.ModelAdmin):
