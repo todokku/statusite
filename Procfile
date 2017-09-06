@@ -1,3 +1,3 @@
-release: newrelic-admin runprogram python manage.py migrate
-web: newrelic-admin runprogram gunicorn config.wsgi:application
-worker: newrelic-admin runprogram honcho start -f Procfile_honcho
+web: newrelic-admin run-program gunicorn config.wsgi:application
+worker: newrelic-admin run-program honcho start -f Procfile_honcho
+release: newrelic-admin run-program python manage.py migrate
