@@ -1,4 +1,11 @@
 {
+  "name": "statusite",
+  "repository": "https://github.com/SalesforceFoundation/statusite",
+  "addons": [
+    "heroku-postgresql",
+    "heroku-redis",
+    "newrelic:wayne"
+  ],
   "environments": {
     "test": {
       "scripts": {
