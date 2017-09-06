@@ -75,14 +75,14 @@ class Release(models.Model):
         api_repo = api_gh.repository(self.repo.owner, self.repo.name)
         release = api_repo.release(self.github_id)
         if release:
-            self.release_notes = release.body
+            release_notes = release.body if release.body else ''
+            self.release_notes = release_notes
             self.release_notes_html = api_gh.markdown(
-                release.body,
+                release_notes,
                 mode='gfm',
                 context='{}/{}'.format(self.repo.owner, self.repo.name),
             )
-            self.time_push_sandbox, self.time_push_prod = parse_times(
-                release.body)
+            self.time_push_sandbox, self.time_push_prod = parse_times(release_notes)
             self.save()
         else:
             raise RepoReloadError(
