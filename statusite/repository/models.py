@@ -27,17 +27,6 @@ class Repository(models.Model):
     def __str__(self):
         return '{}/{}'.format(self.owner, self.name)
    
-    @property 
-    def github_api(self):
-        gh = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
-        gh = gh.repository(self.owner, self.name)
-        return gh
-
-    @property 
-    def github_api_root(self):
-        gh = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
-        return gh
-
     @property
     def latest_release(self):
         release = self.releases.filter(beta=False)[:1]
@@ -68,6 +57,7 @@ class Release(models.Model):
     version = models.CharField(max_length=32)
     beta = models.BooleanField(default=False)
     release_notes = models.TextField()
+    release_notes_html = models.TextField()
     url = models.URLField()
     github_id = models.IntegerField()
     time_created = models.DateTimeField()
@@ -81,27 +71,25 @@ class Release(models.Model):
         return reverse('release_detail', kwargs={'owner': self.owner, 'name': self.name})
 
     def reload(self):
-        github = self.repo.github_api
-        release = github.release(self.github_id)
+        api_gh = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
+        api_repo = api_gh.repository(self.repo.owner, self.repo.name)
+        release = api_repo.release(self.github_id)
         if release:
             self.release_notes = release.body
+            self.release_notes_html = api_gh.markdown(
+                release.body,
+                mode='gfm',
+                context='{}/{}'.format(self.repo.owner, self.repo.name),
+            )
             self.time_push_sandbox, self.time_push_prod = parse_times(
                 release.body)
             self.save()
         else:
             raise RepoReloadError(
-                '\nGitHub repo: {}\n'.format(github.html_url) +
+                '\nGitHub repo: {}\n'.format(api_repo.html_url) +
                 'GitHub release ID: {}\n'.format(self.github_id) +
                 'release: {}'.format(release)
             )
-
-    @property
-    def release_notes_html(self):
-        if not self.release_notes:
-            return None
-        github = self.repo.github_api_root
-        html = github.markdown(self.release_notes, mode='gfm', context='{}/{}'.format(self.repo.owner, self.repo.name))
-        return html
 
     def __str__(self):
         return '{}: {}'.format(self.repo.product_name, self.version)
