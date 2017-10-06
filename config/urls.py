@@ -1,3 +1,4 @@
+from dashing.utils import router
 from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
@@ -5,6 +6,9 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from statusite.repository.views import repo_list
+
+# Load django-dashing dashboard widgets into the router
+from statusite.dashboard.urls import *
 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
@@ -23,6 +27,10 @@ urlpatterns = [
 
     # django-rq
     url(r'^django-rq/', include('django_rq.urls')),
+
+    # Dashboards
+    url(r'^dashboard/', include(router.urls)),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

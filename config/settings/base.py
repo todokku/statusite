@@ -54,6 +54,8 @@ THIRD_PARTY_APPS = [
     'django_rq',
     'scheduler', # django-rq-scheduler
     'django_rq_wrapper',
+    'dashing',
+    'widget_party',
 ]
 
 # Apps specific for this project go here.
@@ -62,6 +64,7 @@ LOCAL_APPS = [
     'statusite.repository.apps.RepositoryConfig',
     'statusite.youtube.apps.YoutubeConfig',
     'statusite.api.apps.ApiConfig',
+    'statusite.dashboard.apps.DashboardConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -293,3 +296,22 @@ RQ_QUEUES = {
 
 # YouTube
 YOUTUBE_API_KEY = None
+
+# django-dashing config
+DASHING = {
+    'INSTALLED_WIDGETS': (
+        'buildstatus',
+        'builderlist',
+        'commitlist',
+        'fatlist',
+        'fatnumber',
+        'graph',
+        'informednumber',
+        'linklist',
+        'list',
+        'knob',
+        'number',
+        'numberchange',
+        'sizednumber',
+    ),
+}

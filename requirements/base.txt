@@ -66,3 +66,7 @@ honcho>=1.0.1
 
 # Google API
 google-api-python-client>=1.6.2
+
+# Django dashboards
+django-dashing==0.3.3
+widget-party==2.3.1
