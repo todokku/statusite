@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-
+from model_utils.models import SoftDeletableModel
 from github3 import login
 from django.conf import settings
 
@@ -51,7 +51,7 @@ class Repository(models.Model):
             if release.time_push_sandbox and release.time_push_sandbox <= timezone.now():
                 return release
 
-class Release(models.Model):
+class Release(SoftDeletableModel):
     repo = models.ForeignKey(Repository, related_name='releases')
     name = models.CharField(max_length=255)
     version = models.CharField(max_length=32)
@@ -85,11 +85,7 @@ class Release(models.Model):
             self.time_push_sandbox, self.time_push_prod = parse_times(release_notes)
             self.save()
         else:
-            raise RepoReloadError(
-                '\nGitHub repo: {}\n'.format(api_repo.html_url) +
-                'GitHub release ID: {}\n'.format(self.github_id) +
-                'release: {}'.format(release)
-            )
+            self.delete()
 
     def __str__(self):
         return '{}: {}'.format(self.repo.product_name, self.version)
