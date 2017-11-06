@@ -4,6 +4,7 @@
 
 
 coverage==4.4.1
+django-coverage-plugin==1.5.0
 flake8==3.3.0 # pyup: != 2.6.0
 django-test-plus==1.0.18
 factory-boy==2.8.1
@@ -11,3 +12,8 @@ factory-boy==2.8.1
 # pytest
 pytest-django==3.1.2
 pytest-sugar==0.8.0
+
+# Django nose
+django-nose==1.4.5
+nose-tap==1.9
+coveralls==1.2.0

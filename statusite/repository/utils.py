@@ -53,6 +53,8 @@ def parse_times(release_notes):
         return parse_datetime(date + ' 00:00+00')
     time_sandbox = None
     time_production = None
+    if not release_notes:
+        return time_sandbox, time_production
     reobj = re.compile(
         '(?P<type>sandbox|production) orgs: (?P<date>\d\d\d\d-\d\d-\d\d)',
         re.IGNORECASE,
