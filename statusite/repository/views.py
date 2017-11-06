@@ -63,18 +63,17 @@ def github_release_webhook(request):
     except Repository.DoesNotExist:
         return HttpResponse('Not listening for this repository')
 
-    try:
-        release = Release.objects.get(version=release_event['release']['name'])
-    except Release.DoesNotExist:
-        release = Release()
-    release.repo = repo
+    release = Release.objects.get_or_create(
+        repo=repo,
+        version=release_event['release']['name'],
+    )
     release.name = release_event['release']['name']
-    release.version = release_event['release']['name']
     release.beta = release_event['release']['prerelease']
     release.url = release_event['release']['html_url']
     release.github_id = release_event['release']['id']
     release.time_created = dateutil.parser.parse(
-        release_event['release']['created_at'])
+        release_event['release']['created_at']
+    )
 
     release_notes = release_event['release']['body']
     if not release_notes:
