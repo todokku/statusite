@@ -1,17 +1,14 @@
 from __future__ import unicode_literals
-import logging
 
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-
+from model_utils.models import SoftDeletableModel
 from github3 import login
 from django.conf import settings
 
 from statusite.repository.exceptions import RepoReloadError
 from statusite.repository.utils import parse_times
-
-logger = logging.getLogger(__name__)
 
 
 class Repository(models.Model):
@@ -54,7 +51,7 @@ class Repository(models.Model):
             if release.time_push_sandbox and release.time_push_sandbox <= timezone.now():
                 return release
 
-class Release(models.Model):
+class Release(SoftDeletableModel):
     repo = models.ForeignKey(Repository, related_name='releases')
     name = models.CharField(max_length=255)
     version = models.CharField(max_length=32)
@@ -88,8 +85,6 @@ class Release(models.Model):
             self.time_push_sandbox, self.time_push_prod = parse_times(release_notes)
             self.save()
         else:
-            # release couldn't be found on github, delete the Release instance
-            logger.warning('Deleting Release {} (pk={})'.format(self, self.pk))
             self.delete()
 
     def __str__(self):
