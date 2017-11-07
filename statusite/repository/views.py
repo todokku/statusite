@@ -77,7 +77,7 @@ def github_release_webhook(request):
             'github_id': release_event['release']['id'],
             'time_created': dateutil.parser.parse(
                 release_event['release']['created_at']
-            )
+            ),
             'release_notes': release_notes,
             'time_push_sandbox': time_push_sandbox,
             'time_push_prod': time_push_prod,
