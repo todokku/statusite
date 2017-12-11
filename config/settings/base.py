@@ -285,7 +285,7 @@ REDIS_URL = env('REDIS_URL', default='redis://localhost:6379')
 REDIS_URL += '/0'
 RQ_QUEUES = {
     'default': {
-        'URL': REDIS_URL,
+        'USE_REDIS_CACHE': 'default',
         'DEFAULT_TIMEOUT': 60,
         'AUTOCOMMIT': False,
     },
