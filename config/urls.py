@@ -10,10 +10,6 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
 
-    # User management
-    url(r'^users/', include('statusite.users.urls', namespace='users')),
-    url(r'^accounts/', include('allauth.urls')),
-
     # API
     url(r'^api/', include('statusite.api.urls', namespace='api')),
 
