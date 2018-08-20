@@ -26,3 +26,7 @@ raven==6.1.0
 # New Relic client
 # ----------------
 newrelic==2.92.0.78
+
+# Django Defender
+# ---------------
+django-defender==0.5.5

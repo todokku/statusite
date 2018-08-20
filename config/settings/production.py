@@ -29,7 +29,10 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # raven sentry client
 # See https://docs.sentry.io/clients/python/integrations/django/
-INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
+INSTALLED_APPS += [
+    'raven.contrib.django.raven_compat', 
+    'defender',
+]
 
 # Use Whitenoise to serve static files
 # See: https://whitenoise.readthedocs.io/
@@ -37,6 +40,8 @@ WHITENOISE_MIDDLEWARE = ['whitenoise.middleware.WhiteNoiseMiddleware', ]
 MIDDLEWARE = WHITENOISE_MIDDLEWARE + MIDDLEWARE
 RAVEN_MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware']
 MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
+DEFENDER_MIDDLEWARE = ['defender.middleware.FailedLoginMiddleware']
+MIDDLEWARE = MIDDLEWARE + DEFENDER_MIDDLEWARE
 
 
 # SECURITY CONFIGURATION
@@ -226,3 +231,6 @@ GITHUB_WEBHOOK_SECRET = env('GITHUB_WEBHOOK_SECRET')
 
 # YouTube
 YOUTUBE_API_KEY = env('YOUTUBE_API_KEY')
+
+# django-defender configuration
+DEFENDER_REDIS_NAME='default'
