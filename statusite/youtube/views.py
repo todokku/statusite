@@ -10,7 +10,6 @@ from statusite.youtube.models import Playlist
 
 
 class PlaylistView(View):
-
     @method_decorator(cache_page(60))
     def dispatch(self, *args, **kwargs):
         return super(PlaylistView, self).dispatch(*args, **kwargs)

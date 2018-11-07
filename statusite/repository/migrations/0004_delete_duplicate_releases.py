@@ -11,12 +11,9 @@ logger = logging.getLogger(__name__)
 
 def delete_duplicate_releases(apps, schema_editor):
     duplicates = []
-    Release = apps.get_model('repository', 'Release')
+    Release = apps.get_model("repository", "Release")
     for release in Release.objects.all():
-        r2 = Release.objects.filter(
-            repo=release.repo,
-            version=release.version,
-        )
+        r2 = Release.objects.filter(repo=release.repo, version=release.version)
         if r2.count() > 1:
             add = True
             for group in duplicates:
@@ -25,14 +22,13 @@ def delete_duplicate_releases(apps, schema_editor):
             if add:
                 duplicates.append([r.pk for r in r2])
     if not duplicates:
-        logger.info('No duplicates found')
+        logger.info("No duplicates found")
         return
     to_delete = set()
     for group in duplicates:
         # keep only the release (per group) with most recent time_created
         most_recent_time_created = datetime.strptime(
-            '2000-01-01T00:00:00-0000',
-            '%Y-%m-%dT%H:%M:%S%z',
+            "2000-01-01T00:00:00-0000", "%Y-%m-%dT%H:%M:%S%z"
         )
         for pk in group:
             release = Release.objects.get(pk=pk)
@@ -44,16 +40,12 @@ def delete_duplicate_releases(apps, schema_editor):
                 to_delete.add(pk)
     for pk in to_delete:
         release = Release.objects.get(pk=pk)
-        logger.warn('Deleting duplicate Release {}'.format(release))
+        logger.warn("Deleting duplicate Release {}".format(release))
         release.delete()
 
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('repository', '0003_release_release_notes_html'),
-    ]
+    dependencies = [("repository", "0003_release_release_notes_html")]
 
-    operations = [
-        migrations.RunPython(delete_duplicate_releases),
-    ]
+    operations = [migrations.RunPython(delete_duplicate_releases)]

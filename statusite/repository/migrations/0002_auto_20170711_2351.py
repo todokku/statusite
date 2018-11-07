@@ -7,13 +7,11 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('repository', '0001_initial'),
-    ]
+    dependencies = [("repository", "0001_initial")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='release',
-            options={'ordering': ['repo__product_name', '-time_created']},
-        ),
+            name="release",
+            options={"ordering": ["repo__product_name", "-time_created"]},
+        )
     ]

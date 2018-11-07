@@ -8,5 +8,5 @@ from statusite.youtube.tasks import update_playlist
 
 @receiver(post_save, sender=Playlist)
 def init_playlist_data(sender, **kwargs):
-    if kwargs['created']:
-        update_playlist.delay(kwargs['instance'].id)
+    if kwargs["created"]:
+        update_playlist.delay(kwargs["instance"].id)

@@ -10,45 +10,60 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Release',
+            name="Release",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('version', models.CharField(max_length=32)),
-                ('beta', models.BooleanField(default=False)),
-                ('release_notes', models.TextField()),
-                ('url', models.URLField()),
-                ('github_id', models.IntegerField()),
-                ('time_created', models.DateTimeField()),
-                ('time_push_sandbox', models.DateTimeField(blank=True, null=True)),
-                ('time_push_prod', models.DateTimeField(blank=True, null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("version", models.CharField(max_length=32)),
+                ("beta", models.BooleanField(default=False)),
+                ("release_notes", models.TextField()),
+                ("url", models.URLField()),
+                ("github_id", models.IntegerField()),
+                ("time_created", models.DateTimeField()),
+                ("time_push_sandbox", models.DateTimeField(blank=True, null=True)),
+                ("time_push_prod", models.DateTimeField(blank=True, null=True)),
             ],
-            options={
-                'ordering': ['repo__product_name', 'name'],
-            },
+            options={"ordering": ["repo__product_name", "name"]},
         ),
         migrations.CreateModel(
-            name='Repository',
+            name="Repository",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('owner', models.CharField(max_length=255)),
-                ('product_name', models.CharField(max_length=255)),
-                ('github_id', models.IntegerField(blank=True, null=True)),
-                ('url', models.URLField(max_length=255)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("owner", models.CharField(max_length=255)),
+                ("product_name", models.CharField(max_length=255)),
+                ("github_id", models.IntegerField(blank=True, null=True)),
+                ("url", models.URLField(max_length=255)),
             ],
-            options={
-                'ordering': ['name', 'owner'],
-            },
+            options={"ordering": ["name", "owner"]},
         ),
         migrations.AddField(
-            model_name='release',
-            name='repo',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='releases', to='repository.Repository'),
+            model_name="release",
+            name="repo",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="releases",
+                to="repository.Repository",
+            ),
         ),
     ]
