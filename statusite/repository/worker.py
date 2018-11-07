@@ -23,7 +23,7 @@ class RequeueingWorker(Worker):
             """
             Terminates the application (cold shutdown).
             """
-            self.log.warning('Cold shut down.')
+            self.log.warning("Cold shut down.")
 
             # If shutdown is requested in the middle of a job, requeue the job
             if self.get_current_job():
@@ -32,15 +32,13 @@ class RequeueingWorker(Worker):
 
             # Take down the horse with the worker
             if self.horse_pid:
-                self.log.debug(
-                    'Taking down horse %d with me.' % self.horse_pid
-                )
+                self.log.debug("Taking down horse %d with me." % self.horse_pid)
                 try:
                     os.kill(self.horse_pid, signal.SIGKILL)
                 except OSError as e:
                     # ESRCH ("No such process") is fine with us
                     if e.errno != errno.ESRCH:
-                        self.log.debug('Horse already down.')
+                        self.log.debug("Horse already down.")
                         raise
 
             raise SystemExit()
@@ -50,20 +48,20 @@ class RequeueingWorker(Worker):
             Stops the current worker loop but waits for child processes to end
             gracefully (warm shutdown).
             """
-            self.log.debug('Got signal %s.' % signal_name(signum))
+            self.log.debug("Got signal %s." % signal_name(signum))
 
             signal.signal(signal.SIGINT, request_force_stop)
             signal.signal(signal.SIGTERM, request_force_stop)
 
-            self.log.warning('Warm shut down requested.')
+            self.log.warning("Warm shut down requested.")
 
             # If shutdown is requested in the middle of a job, wait until
             # finish before shutting down
             if self.get_current_job():
                 self._stopped = True
                 self.log.debug(
-                    'Stopping after current horse is finished. '
-                    'Press Ctrl+C again for a cold shutdown.'
+                    "Stopping after current horse is finished. "
+                    "Press Ctrl+C again for a cold shutdown."
                 )
             else:
                 raise StopRequested()

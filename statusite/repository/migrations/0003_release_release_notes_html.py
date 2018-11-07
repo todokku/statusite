@@ -7,15 +7,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('repository', '0002_auto_20170711_2351'),
-    ]
+    dependencies = [("repository", "0002_auto_20170711_2351")]
 
     operations = [
         migrations.AddField(
-            model_name='release',
-            name='release_notes_html',
-            field=models.TextField(default=''),
+            model_name="release",
+            name="release_notes_html",
+            field=models.TextField(default=""),
             preserve_default=False,
-        ),
+        )
     ]

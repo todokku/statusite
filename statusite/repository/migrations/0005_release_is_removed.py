@@ -7,14 +7,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('repository', '0004_delete_duplicate_releases'),
-    ]
+    dependencies = [("repository", "0004_delete_duplicate_releases")]
 
     operations = [
         migrations.AddField(
-            model_name='release',
-            name='is_removed',
+            model_name="release",
+            name="is_removed",
             field=models.BooleanField(default=False),
-        ),
+        )
     ]

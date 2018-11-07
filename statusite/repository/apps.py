@@ -4,7 +4,7 @@ from django.apps import AppConfig
 
 
 class RepositoryConfig(AppConfig):
-    name = 'statusite.repository'
+    name = "statusite.repository"
 
     def ready(self):
         import statusite.repository.handlers

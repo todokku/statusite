@@ -2,12 +2,12 @@
 import os
 import sys
 
-if __name__ == '__main__':
-    if sys.argv[1] == 'test':
-        settings_file = 'config.settings.test'
+if __name__ == "__main__":
+    if sys.argv[1] == "test":
+        settings_file = "config.settings.test"
     else:
-        settings_file = 'config.settings.local'
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_file)
+        settings_file = "config.settings.local"
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_file)
 
     try:
         from django.core.management import execute_from_command_line
@@ -28,6 +28,6 @@ if __name__ == '__main__':
     # This allows easy placement of apps within the interior
     # statusite directory.
     current_path = os.path.dirname(os.path.abspath(__file__))
-    sys.path.append(os.path.join(current_path, 'statusite'))
+    sys.path.append(os.path.join(current_path, "statusite"))
 
     execute_from_command_line(sys.argv)

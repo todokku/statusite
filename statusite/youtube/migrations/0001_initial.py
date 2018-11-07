@@ -9,17 +9,29 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Playlist',
+            name="Playlist",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('youtube_id', models.CharField(max_length=255)),
-                ('json_str', models.TextField(blank=True, editable=False, null=True)),
-                ('title', models.CharField(blank=True, editable=False, max_length=255, null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("youtube_id", models.CharField(max_length=255)),
+                ("json_str", models.TextField(blank=True, editable=False, null=True)),
+                (
+                    "title",
+                    models.CharField(
+                        blank=True, editable=False, max_length=255, null=True
+                    ),
+                ),
             ],
-        ),
+        )
     ]

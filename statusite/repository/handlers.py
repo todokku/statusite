@@ -5,9 +5,10 @@ from django.dispatch import receiver
 from github3 import login
 from statusite.repository.models import Repository
 
+
 @receiver(pre_save, sender=Repository)
 def set_github_id(sender, **kwargs):
-    repository = kwargs['instance']
+    repository = kwargs["instance"]
 
     if not repository.github_id:
         github = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
