@@ -19,7 +19,7 @@ class Repository(models.Model):
     url = models.URLField(max_length=255)
 
     class Meta:
-        ordering = ['name','owner']
+        ordering = ["name", "owner"]
 
     def get_absolute_url(self):
         return reverse(
@@ -27,8 +27,8 @@ class Repository(models.Model):
         )
 
     def __str__(self):
-        return '{}/{}'.format(self.owner, self.name)
-   
+        return "{}/{}".format(self.owner, self.name)
+
     @property
     def latest_release(self):
         release = self.releases.filter(beta=False)[:1]
@@ -50,11 +50,15 @@ class Repository(models.Model):
     @property
     def sandbox_release(self):
         for release in self.releases.filter(beta=False):
-            if release.time_push_sandbox and release.time_push_sandbox <= timezone.now():
+            if (
+                release.time_push_sandbox
+                and release.time_push_sandbox <= timezone.now()
+            ):
                 return release
 
+
 class Release(SoftDeletableModel):
-    repo = models.ForeignKey(Repository, related_name='releases')
+    repo = models.ForeignKey(Repository, related_name="releases")
     name = models.CharField(max_length=255)
     version = models.CharField(max_length=32)
     beta = models.BooleanField(default=False)
@@ -67,8 +71,8 @@ class Release(SoftDeletableModel):
     time_push_prod = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        ordering = ['repo__product_name', '-time_created']
-        
+        ordering = ["repo__product_name", "-time_created"]
+
     def get_absolute_url(self):
         return reverse(
             "release-detail", kwargs={"owner": self.owner, "name": self.name}
@@ -79,12 +83,12 @@ class Release(SoftDeletableModel):
         api_repo = api_gh.repository(self.repo.owner, self.repo.name)
         release = api_repo.release(self.github_id)
         if release:
-            release_notes = release.body if release.body else ''
+            release_notes = release.body if release.body else ""
             self.release_notes = release_notes
             self.release_notes_html = api_gh.markdown(
                 release_notes,
-                mode='gfm',
-                context='{}/{}'.format(self.repo.owner, self.repo.name),
+                mode="gfm",
+                context="{}/{}".format(self.repo.owner, self.repo.name),
             )
             self.time_push_sandbox, self.time_push_prod = parse_times(release_notes)
             self.save()
@@ -92,4 +96,4 @@ class Release(SoftDeletableModel):
             self.delete()
 
     def __str__(self):
-        return '{}: {}'.format(self.repo.product_name, self.version)
+        return "{}: {}".format(self.repo.product_name, self.version)
