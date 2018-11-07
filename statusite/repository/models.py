@@ -22,7 +22,9 @@ class Repository(models.Model):
         ordering = ['name','owner']
 
     def get_absolute_url(self):
-        return reverse('repo_detail', kwargs={'owner': self.owner, 'name': self.name})
+        return reverse(
+            "repository-detail", kwargs={"owner": self.owner, "name": self.name}
+        )
 
     def __str__(self):
         return '{}/{}'.format(self.owner, self.name)
@@ -68,7 +70,9 @@ class Release(SoftDeletableModel):
         ordering = ['repo__product_name', '-time_created']
         
     def get_absolute_url(self):
-        return reverse('release_detail', kwargs={'owner': self.owner, 'name': self.name})
+        return reverse(
+            "release-detail", kwargs={"owner": self.owner, "name": self.name}
+        )
 
     def reload(self):
         api_gh = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
