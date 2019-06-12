@@ -44,19 +44,6 @@ RQ_QUEUES = {
     "short": {"URL": REDIS_URL, "DEFAULT_TIMEOUT": 500, "AUTOCOMMIT": False},
 }
 
-# Add django_nose to INSTALLED_APPS
-INSTALLED_APPS = INSTALLED_APPS + ["django_nose"]
-
-# TESTING
-# ------------------------------------------------------------------------------
-TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
-NOSE_ARGS = [
-    "--with-tap",
-    "--tap-stream",
-    "--with-coverage",
-    "--cover-package=statusite",
-]
-
 # PASSWORD HASHING
 # ------------------------------------------------------------------------------
 # Use fast password hasher so tests run faster

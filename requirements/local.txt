@@ -1,11 +1,8 @@
 # Local development dependencies go here
 -r test.txt
 
-Sphinx==1.6.3
-django-extensions==1.8.0
-Werkzeug==0.12.2
-
 django-debug-toolbar==1.8
-
-# improved REPL
+django-extensions==1.8.0
 ipdb==0.10.3
+Sphinx==1.6.3
+Werkzeug==0.12.2
