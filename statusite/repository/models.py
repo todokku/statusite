@@ -7,7 +7,6 @@ from model_utils.models import SoftDeletableModel
 from github3 import login
 from django.conf import settings
 
-from statusite.repository.exceptions import RepoReloadError
 from statusite.repository.utils import parse_times
 
 

@@ -1,4 +1,3 @@
-from django.conf.urls import include
 from django.conf.urls import url
 
 from statusite.repository import views as repository_views

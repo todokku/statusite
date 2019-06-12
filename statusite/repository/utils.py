@@ -57,7 +57,7 @@ def parse_times(release_notes):
     if not release_notes:
         return time_sandbox, time_production
     reobj = re.compile(
-        "(?P<type>sandbox|production) orgs: (?P<date>\d\d\d\d-\d\d-\d\d)", re.IGNORECASE
+        r"(?P<type>sandbox|production) orgs: (?P<date>\d\d\d\d-\d\d-\d\d)", re.IGNORECASE
     )
     for line in release_notes.splitlines():
         m = reobj.match(line)

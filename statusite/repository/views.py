@@ -1,11 +1,8 @@
 import hmac
 import json
-import re
 
 import dateutil.parser
 from hashlib import sha1
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.http import HttpResponse
 from django.http import HttpResponseForbidden
@@ -49,7 +46,7 @@ def github_release_webhook(request):
     if not release_notes:
         release_notes = ""
     time_push_sandbox, time_push_prod = parse_times(release_notes)
-    release = Release.objects.update_or_create(
+    Release.objects.update_or_create(
         repo=repo,
         version=release_event["release"]["name"],
         defaults={

@@ -7,4 +7,5 @@ class RepositoryConfig(AppConfig):
     name = "statusite.repository"
 
     def ready(self):
-        import statusite.repository.handlers
+        # side-effect import to register handler
+        import statusite.repository.handlers  # noqa

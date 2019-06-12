@@ -7,4 +7,5 @@ class YoutubeConfig(AppConfig):
     name = "statusite.youtube"
 
     def ready(self):
-        import statusite.youtube.handlers
+        # side-effect import to register handler
+        import statusite.youtube.handlers  # noqa
