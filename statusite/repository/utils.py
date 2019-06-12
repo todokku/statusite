@@ -3,7 +3,6 @@ import re
 from django.conf import settings
 from django.utils.dateparse import parse_datetime
 from github3 import login
-import pytz
 
 
 def create_status(build):

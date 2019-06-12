@@ -58,7 +58,7 @@ class Repository(models.Model):
 
 
 class Release(SoftDeletableModel):
-    repo = models.ForeignKey(Repository, related_name="releases")
+    repo = models.ForeignKey(Repository, related_name="releases", on_delete=models.deletion.CASCADE)
     name = models.CharField(max_length=255)
     version = models.CharField(max_length=32)
     beta = models.BooleanField(default=False)

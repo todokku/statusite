@@ -1,68 +1,45 @@
-# Wheel 0.25+ needed to install certain packages on CPython 3.5+
-# like Pillow and psycopg2
-# See http://bitly.com/wheel-building-fails-CPython-35
-# Verified bug on Python 3.5.1
-wheel==0.29.0
-
-
-# Bleeding edge Django
-django==1.10.7 # pyup: >=1.10,<1.11
-
-# Configuration
-django-environ==0.4.3
-whitenoise==3.3.0
-
-
-# Forms
-django-braces==1.11.0
-django-crispy-forms==1.6.1
-
-# Models
-django-model-utils==3.0.0
-
-# Images
-Pillow==4.1.1
-
-# Password storage
-argon2-cffi==16.3.0
-
-# For user registration, either via email or social
-# Well-built with regular release cycles!
-django-allauth==0.32.0
-
-
-# Python-PostgreSQL Database Adapter
-psycopg2==2.7.1
-
-# Unicode slugification
+argon2-cffi==19.1.0
+asn1crypto==0.24.0
 awesome-slugify==1.6.5
-
-# Time zones support
-pytz==2017.2
-
-# Redis support
-django-redis==4.8.0
-redis>=2.10.5
-
-# github3.py
-github3.py==0.9.6
-
-# Django REST Framework
-djangorestframework==3.6.3
-
-# Django SLDS
-django_slds==0.1.2
-
-# dateutil
-python-dateutil==2.6.0
-
-# Django RQ
-django-rq>=0.9.5
-django-rq-wrapper>=2.1
-django-rq-scheduler>=1.1.1
-
-# Honcho: python foreman clone
-honcho>=1.0.1
-
-# Google API
-google-api-python-client>=1.6.2
+cachetools==3.1.1
+certifi==2019.3.9
+cffi==1.12.3
+chardet==3.0.4
+click==7.0
+croniter==0.3.30
+cryptography==2.7
+django-crispy-forms==1.7.2
+django-environ==0.4.5
+django-model-utils==3.1.2
+django-redis==4.10.0
+django-rq-scheduler==1.1.3
+django-rq-wrapper==3.0
+django-rq==2.0
+django-slds==0.1.2
+django==2.2.2
+djangorestframework==3.9.4
+github3.py==1.3.0
+google-api-python-client==1.7.9
+google-auth==1.6.3
+google-auth-httplib2==0.0.3
+honcho==1.0.1
+httplib2==0.13.0
+idna==2.8
+jwcrypto==0.6.0
+psycopg2-binary==2.8.2
+pyasn1==0.4.5
+pyasn1-modules==0.2.5
+pycparser==2.19
+python-dateutil==2.8.0
+pytz==2019.1
+redis==3.2.1
+regex==2019.6.8
+requests==2.22.0
+rsa==4.0
+six==1.12.0
+sqlparse==0.3.0
+Unidecode==0.4.21
+uritemplate==3.0.0
+urllib3==1.25.3
+wheel==0.33.4
+whitenoise==4.1.2
