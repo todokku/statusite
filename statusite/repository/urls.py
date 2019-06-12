@@ -6,6 +6,7 @@ from statusite.repository import views as repository_views
 router = routers.DefaultRouter()
 # router.register(r'repos', repository_views.ApiRepository)
 
+app_name = 'repository'
 urlpatterns = [
     # url(r'^', include(router.urls)),
     url(
