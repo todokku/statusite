@@ -5,7 +5,7 @@ from statusite.repository import views as repository_views
 from statusite.youtube import views as youtube_views
 
 
-app_name = 'api'
+app_name = "api"
 urlpatterns = [
     url(
         r"repository/(?P<owner>\w+)/(?P<repo>[^/].*)/(?P<version>.+)$",

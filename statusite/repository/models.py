@@ -24,7 +24,8 @@ class Repository(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            "repository:repository-detail", kwargs={"owner": self.owner, "name": self.name}
+            "repository:repository-detail",
+            kwargs={"owner": self.owner, "name": self.name},
         )
 
     def __str__(self):
@@ -59,7 +60,9 @@ class Repository(models.Model):
 
 
 class Release(SoftDeletableModel):
-    repo = models.ForeignKey(Repository, related_name="releases", on_delete=models.deletion.CASCADE)
+    repo = models.ForeignKey(
+        Repository, related_name="releases", on_delete=models.deletion.CASCADE
+    )
     name = models.CharField(max_length=255)
     version = models.CharField(max_length=32)
     beta = models.BooleanField(default=False)
