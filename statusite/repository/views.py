@@ -22,21 +22,6 @@ from statusite.repository.serializers import RepositorySerializer
 from statusite.repository.utils import parse_times
 
 
-def repo_list(request, owner=None):
-    repos = Repository.objects.all()
-
-    context = {"repos": repos}
-    return render(request, "repository/repo_list.html", context=context)
-
-
-def repo_detail(request, owner, name):
-    query = {"owner": owner, "name": name}
-    repo = get_object_or_404(Repository, **query)
-
-    context = {"repo": repo}
-    return render(request, "repository/repo_detail.html", context=context)
-
-
 def validate_github_webhook(request):
     key = settings.GITHUB_WEBHOOK_SECRET
     signature = request.META.get("HTTP_X_HUB_SIGNATURE").split("=")[1]

@@ -20,10 +20,11 @@ class Repository(models.Model):
 
     class Meta:
         ordering = ["name", "owner"]
+        verbose_name_plural = "repositories"
 
     def get_absolute_url(self):
         return reverse(
-            "repository-detail", kwargs={"owner": self.owner, "name": self.name}
+            "repository:repository-detail", kwargs={"owner": self.owner, "name": self.name}
         )
 
     def __str__(self):
