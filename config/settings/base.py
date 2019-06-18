@@ -50,7 +50,6 @@ THIRD_PARTY_APPS = [
     "rest_framework",  # API
     "django_rq",
     "scheduler",  # django-rq-scheduler
-    "django_rq_wrapper",
 ]
 
 # Apps specific for this project go here.
