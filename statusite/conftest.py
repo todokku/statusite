@@ -211,4 +211,5 @@ def mock_github_markdown_response():
 def worker():
     # Run jobs in the same thread for tests,
     # since Django has problems with the db connection when forking
+    get_queue().empty()
     return get_worker(worker_class=SimpleWorker)
