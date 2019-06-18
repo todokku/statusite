@@ -257,6 +257,7 @@ GITHUB_WEBHOOK_SECRET = None
 # django-rq
 REDIS_URL = env("REDIS_URL", default="redis://localhost:6379")
 REDIS_URL += "/0"
+RQ = {"WORKER_CLASS": "statusite.worker.RequeueingWorker"}
 RQ_QUEUES = {
     "default": {
         "USE_REDIS_CACHE": "default",

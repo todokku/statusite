@@ -32,7 +32,7 @@ def validate_github_webhook(request):
 @require_POST
 def github_release_webhook(request):
     if not validate_github_webhook(request):
-        return HttpResponseForbidden
+        return HttpResponseForbidden()
 
     release_event = json.loads(request.body.decode("utf-8"))
 
@@ -42,9 +42,7 @@ def github_release_webhook(request):
     except Repository.DoesNotExist:
         return HttpResponse("Not listening for this repository")
 
-    release_notes = release_event["release"]["body"]
-    if not release_notes:
-        release_notes = ""
+    release_notes = release_event["release"]["body"] or ""
     time_push_sandbox, time_push_prod = parse_times(release_notes)
     Release.objects.update_or_create(
         repo=repo,

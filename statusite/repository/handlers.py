@@ -13,4 +13,3 @@ def set_github_id(sender, **kwargs):
         github = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
         repo = github.repository(repository.owner, repository.name)
         repository.github_id = repo.id
-        repository.save()

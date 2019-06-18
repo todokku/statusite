@@ -6,6 +6,7 @@ from django.utils import timezone
 from model_utils.models import SoftDeletableModel
 from github3 import login
 from django.conf import settings
+import github3
 
 from statusite.repository.utils import parse_times
 
@@ -23,8 +24,7 @@ class Repository(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            "repository:repository-detail",
-            kwargs={"owner": self.owner, "name": self.name},
+            "api:api-repository", kwargs={"owner": self.owner, "repo": self.name}
         )
 
     def __str__(self):
@@ -78,14 +78,22 @@ class Release(SoftDeletableModel):
 
     def get_absolute_url(self):
         return reverse(
-            "release-detail", kwargs={"owner": self.owner, "name": self.name}
+            "api:api-release",
+            kwargs={
+                "owner": self.repo.owner,
+                "repo": self.repo.name,
+                "version": self.version,
+            },
         )
 
     def reload(self):
         api_gh = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
         api_repo = api_gh.repository(self.repo.owner, self.repo.name)
-        release = api_repo.release(self.github_id)
-        if release:
+        try:
+            release = api_repo.release(self.github_id)
+        except github3.exceptions.NotFoundError:
+            self.delete()
+        else:
             release_notes = release.body if release.body else ""
             self.release_notes = release_notes
             self.release_notes_html = api_gh.markdown(
@@ -95,8 +103,6 @@ class Release(SoftDeletableModel):
             )
             self.time_push_sandbox, self.time_push_prod = parse_times(release_notes)
             self.save()
-        else:
-            self.delete()
 
     def __str__(self):
         return "{}: {}".format(self.repo.product_name, self.version)

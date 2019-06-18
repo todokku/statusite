@@ -61,3 +61,8 @@ TEMPLATES[0]["OPTIONS"]["loaders"] = [
         ],
     ]
 ]
+
+# GitHub
+GITHUB_USERNAME = "test"
+GITHUB_PASSWORD = "test"
+GITHUB_WEBHOOK_SECRET = "test"
