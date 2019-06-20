@@ -10,13 +10,33 @@ A simple Django status site for Salesforce managed package projects hosted on Gi
 
 :License: BSD
 
+Setup
+-----
 
-Settings
---------
+Set up a virtualenv however you usually do that (for example)::
 
-Moved to settings_.
+    $ python3 -m venv ../envs/statusite-py3
 
-.. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
+Activate it directly or through a .envrc (direnv)::
+
+    $ source ../envs/statusite-py3/bin/activate
+
+While you're at it, set the DJANGO_READ_DOT_ENV_FILE environment variable 
+(direnv might be a good way to make this persistent)::
+
+    $ export DJANGO_READ_DOT_ENV_FILE=True
+
+Setup your environment::
+
+    $ pip install -r requirements/local.txt
+    $ cp env.example .env
+    $ code .env
+    $ # make necessary edits
+    $ ./manage.py createdatabase
+    $ echo "CREATE DATABASE statusite WITH ENCODING 'UTF-8';"  | psql
+    $ ./manage.py migrate
+
+Now you'll want to set up your users as described below.
 
 Basic Commands
 --------------
@@ -32,21 +52,16 @@ Setting Up Your Users
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
-Test coverage
+Running tests
 ^^^^^^^^^^^^^
 
-To run the tests, check your test coverage, and generate an HTML coverage report::
+To run the tests and generate a coverage report::
 
-    $ coverage run manage.py test
-    $ coverage html
-    $ open htmlcov/index.html
+    $ redis-server # if it isn't already running
+    $ coverage erase
+    $ coverage run pytest
+    $ coverage report -m
 
-Running tests with py.test
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-  $ py.test
 
 Live reloading and Sass CSS compilation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -56,6 +71,12 @@ Moved to `Live reloading and SASS compilation`_.
 .. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
 
 
+Settings
+--------
+
+Moved to settings_.
+
+.. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
 
 
 
@@ -80,7 +101,3 @@ Heroku
 See detailed `cookiecutter-django Heroku documentation`_.
 
 .. _`cookiecutter-django Heroku documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html
-
-
-
-
