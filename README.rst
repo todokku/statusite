@@ -21,7 +21,7 @@ Activate it directly or through a .envrc (direnv)::
 
     $ source ../envs/statusite-py3/bin/activate
 
-While you're at it, set the DJANGO_READ_DOT_ENV_FILE environment variable 
+While you're at it, set the DJANGO_READ_DOT_ENV_FILE environment variable
 (direnv might be a good way to make this persistent)::
 
     $ export DJANGO_READ_DOT_ENV_FILE=True
