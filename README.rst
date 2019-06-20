@@ -10,13 +10,32 @@ A simple Django status site for Salesforce managed package projects hosted on Gi
 
 :License: BSD
 
+Setup
+-----
 
-Settings
---------
+Set up a virtualenv however you usually do that (for example)::
 
-Moved to settings_.
+    $ python3 -m venv ../envs/statusite-py3
 
-.. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
+Activate it directly or through a .envrc (direnv)::
+
+    $ source ../envs/statusite-py3/bin/activate
+
+While you're at it, set the DJANGO_READ_DOT_ENV_FILE environment variable
+(direnv might be a good way to make this persistent)::
+
+    $ export DJANGO_READ_DOT_ENV_FILE=True
+
+Setup your environment::
+
+    $ pip install -r requirements/local.txt
+    $ cp env.example .env
+    $ code .env
+    $ # make necessary edits
+    $ createdb statusite
+    $ ./manage.py migrate
+
+Now you'll want to set up your users as described below.
 
 Basic Commands
 --------------
@@ -37,6 +56,7 @@ Running tests
 
 To run the tests and generate a coverage report::
 
+    $ redis-server # if it isn't already running
     $ coverage erase
     $ coverage run pytest
     $ coverage report -m
@@ -50,6 +70,12 @@ Moved to `Live reloading and SASS compilation`_.
 .. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
 
 
+Settings
+--------
+
+Moved to settings_.
+
+.. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
 
 
 
@@ -74,7 +100,3 @@ Heroku
 See detailed `cookiecutter-django Heroku documentation`_.
 
 .. _`cookiecutter-django Heroku documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html
-
-
-
-
