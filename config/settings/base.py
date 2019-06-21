@@ -46,14 +46,10 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",  # Form layouts
-    "allauth",  # registration
-    "allauth.account",  # registration
-    "allauth.socialaccount",  # registration
     "django_slds",  # Salesforce Lightning Design System
     "rest_framework",  # API
     "django_rq",
     "scheduler",  # django-rq-scheduler
-    "django_rq_wrapper",
 ]
 
 # Apps specific for this project go here.
@@ -232,10 +228,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # AUTHENTICATION CONFIGURATION
 # ------------------------------------------------------------------------------
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
+AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
 
 # Some really nice defaults
 ACCOUNT_AUTHENTICATION_METHOD = "username"
@@ -243,7 +236,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", False)
-ACCOUNT_ADAPTER = "statusite.users.adapters.AccountAdapter"
 
 # Custom user app defaults
 # Select the correct user model
@@ -264,6 +256,7 @@ GITHUB_WEBHOOK_SECRET = None
 # django-rq
 REDIS_URL = env("REDIS_URL", default="redis://localhost:6379")
 REDIS_URL += "/0"
+RQ = {"WORKER_CLASS": "statusite.worker.RequeueingWorker"}
 RQ_QUEUES = {
     "default": {
         "USE_REDIS_CACHE": "default",

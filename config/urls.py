@@ -2,18 +2,17 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView
 from django.views import defaults as default_views
-from statusite.repository.views import repo_list
+from django.views.generic import TemplateView
 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
     # API
-    url(r"^api/", include("statusite.api.urls", namespace="api")),
+    url(r"^api/", include("statusite.api.urls")),
     # repository app
-    url(r"^$", repo_list, name="home"),
-    url(r"^repo/", include("statusite.repository.urls", namespace="repository")),
+    url(r"^$", TemplateView.as_view(template_name="layout_full.html"), name="home"),
+    url(r"^repo/", include("statusite.repository.urls")),
     # django-rq
     url(r"^django-rq/", include("django_rq.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

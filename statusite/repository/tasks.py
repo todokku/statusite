@@ -10,7 +10,6 @@ MAX_PRODUCTION = 5  # get a few latest in case push dates are canceled
 
 @django_rq.job("default", timeout=60)
 def update_latest_releases():
-    db.connection.close()
     n = 0
 
     def reload_releases(releases, beta=False):

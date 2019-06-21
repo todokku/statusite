@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db.models.signals import pre_save
-from django.db.models.signals import post_save
 from django.dispatch import receiver
 from github3 import login
 from statusite.repository.models import Repository
@@ -14,4 +13,3 @@ def set_github_id(sender, **kwargs):
         github = login(settings.GITHUB_USERNAME, settings.GITHUB_PASSWORD)
         repo = github.repository(repository.owner, repository.name)
         repository.github_id = repo.id
-        repository.save()

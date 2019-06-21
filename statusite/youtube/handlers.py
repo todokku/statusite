@@ -1,6 +1,5 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import django_rq
 
 from statusite.youtube.models import Playlist
 from statusite.youtube.tasks import update_playlist
