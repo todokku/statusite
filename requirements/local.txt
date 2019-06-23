@@ -4,4 +4,4 @@
 django-debug-toolbar==1.11
 django-extensions==2.1.9
 ipdb==0.12
-Sphinx==2.1.1
+Sphinx==2.1.2
