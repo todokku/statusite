@@ -10,7 +10,7 @@ fakeredis==1.0.3
 flake8==3.7.7
 pytest==5.0.0
 pytest-django==3.5.1
-pytest-factoryboy==2.0.2
+pytest-factoryboy==2.0.3
 pytest-mock==1.10.4
 pytest-tap==2.3
 responses==0.10.6
