@@ -16,7 +16,7 @@ django-rq-scheduler==1.1.3
 django-rq==2.1.0
 django-slds==0.1.2
 django==2.2.3
-djangorestframework==3.9.4
+djangorestframework==3.10.1
 github3.py==1.3.0
 google-api-python-client==1.7.9
 google-auth==1.6.3
@@ -35,11 +35,11 @@ redis==3.2.1
 regex==2019.6.8
 requests==2.22.0
 rsa==4.0
-sentry-sdk==0.9.5
+sentry-sdk==0.10.2
 six==1.12.0
 sqlparse==0.3.0
 Unidecode==1.1.1
 uritemplate==3.0.0
 urllib3==1.25.3
 wheel==0.33.4
-whitenoise==4.1.2
+whitenoise==4.1.3
