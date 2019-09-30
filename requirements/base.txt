@@ -22,7 +22,7 @@ google-api-python-client==1.7.11
 google-auth==1.6.3
 google-auth-httplib2==0.0.3
 honcho==1.0.1
-httplib2==0.13.1
+httplib2==0.14.0
 idna==2.8
 jwcrypto==0.6.0
 psycopg2-binary==2.8.3
@@ -40,6 +40,6 @@ six==1.12.0
 sqlparse==0.3.0
 Unidecode==1.1.1
 uritemplate==3.0.0
-urllib3==1.25.5
+urllib3==1.25.6
 wheel==0.33.6
-whitenoise==4.1.3
+whitenoise==4.1.4
