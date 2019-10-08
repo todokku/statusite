@@ -2,6 +2,6 @@
 -r test.txt
 
 django-debug-toolbar==2.0
-django-extensions==2.2.1
+django-extensions==2.2.3
 ipdb==0.12.2
 Sphinx==2.2.0
