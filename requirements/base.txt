@@ -8,7 +8,7 @@ chardet==3.0.4
 click==7.0
 croniter==0.3.31
 cryptography==2.8
-django-crispy-forms==1.8.1
+django-crispy-forms==1.9.0
 django-environ==0.4.5
 django-model-utils==4.0.0
 django-redis==4.11.0
@@ -23,8 +23,8 @@ google-auth==1.11.2
 google-auth-httplib2==0.0.3
 honcho==1.0.1
 httplib2==0.17.0
-idna==2.8
-jwcrypto==0.6.0
+idna==2.9
+jwcrypto==0.7
 psycopg2-binary==2.8.4
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
@@ -32,12 +32,12 @@ pycparser==2.19
 python-dateutil==2.8.1
 pytz==2019.3
 redis==3.4.1
-regex==2020.1.8
-requests==2.22.0
+regex==2020.2.20
+requests==2.23.0
 rsa==4.0
-sentry-sdk==0.14.1
+sentry-sdk==0.14.2
 six==1.14.0
-sqlparse==0.3.0
+sqlparse==0.3.1
 Unidecode==1.1.1
 uritemplate==3.0.1
 urllib3==1.25.8
