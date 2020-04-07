@@ -8,7 +8,7 @@ chardet==3.0.4
 click==7.1.1
 croniter==0.3.31
 cryptography==2.9
-django-crispy-forms==1.8.1
+django-crispy-forms==1.9.0
 django-environ==0.4.5
 django-model-utils==4.0.0
 django-redis==4.11.0
@@ -23,8 +23,8 @@ google-auth==1.13.1
 google-auth-httplib2==0.0.3
 honcho==1.0.1
 httplib2==0.17.1
-idna==2.8
-jwcrypto==0.6.0
+idna==2.9
+jwcrypto==0.7
 psycopg2-binary==2.8.4
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
